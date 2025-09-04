@@ -38,15 +38,29 @@ pub struct FieldConfig {
 #[derive(Serialize, Deserialize, Clone, PartialEq, Debug)]
 #[repr(C)]
 pub struct GoalConfig {
-    pub height: u32,
+    pub normal_height: u32,
     pub thickness: u32,
-    pub penalty_radius: u32,
+    pub penalty_box_width: u32,
+    pub penalty_box_height: u32,
+    pub penalty_box_radius: u32,
+}
+
+
+impl GoalConfig {
+    pub fn current_height(&self, conf: &GameConfig, tick: u32) -> u32 {
+        if tick <= conf.max_ticks {
+            self.normal_height
+        } else {
+            self.penalty_box_height
+        }
+    }
 }
 
 #[derive(Serialize, Deserialize, Clone, PartialEq, Debug)]
 #[repr(C)]
 pub struct GameConfig {
     pub max_ticks: u32,
+    pub endgame_ticks: u32,
     pub spawn_ball_dist: f32,
     pub ball: BallConfig,
     pub player: PlayerConfig,

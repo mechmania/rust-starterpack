@@ -22,9 +22,10 @@ async fn run() -> anyhow::Result<()> {
 
     let path = PathBuf::from(&args.skip(1).next().unwrap());
     let chan = EngineChannel::from_path(path)?;
-    let strat = get_strategy();
 
     chan.handle_handshake().await?;
+
+    let strat = get_strategy();
 
     loop {
         chan.handle_msg(&strat).await;
