@@ -14,7 +14,6 @@ async fn main() {
 }
 
 async fn run() -> anyhow::Result<()> {
-    // say hi
     let args = args();
     if args.len() < 2 {
         println!("usage: [bin name] [shmem path]");
