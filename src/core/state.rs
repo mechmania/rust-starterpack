@@ -70,7 +70,7 @@ impl Mirror for Team {
 }
 
 
-#[derive(Serialize, Deserialize, Clone, Copy, PartialEq, Eq, Default)]
+#[derive(Serialize, Deserialize, Clone, Copy, PartialEq, Eq, Default, Debug)]
 #[repr(C)]
 pub struct TeamPair<T> {
     pub me: T,
@@ -203,7 +203,7 @@ impl Mirror for Vec2 {
 }
 
 
-#[derive(Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Debug)]
 #[repr(C)]
 pub struct PlayerState {
     pub id: PlayerId,
@@ -245,7 +245,7 @@ impl Mirror for u32 {
 pub type TeamAction = [PlayerAction; NUM_PLAYERS as usize];
 pub type PlayerArray<T> = [T; NUM_PLAYERS as usize * 2];
 
-#[derive(Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Debug)]
 #[repr(u8, C)]
 pub enum BallPossessionState {
     Possessed {
@@ -273,7 +273,7 @@ impl Mirror for BallPossessionState {
     }
 }
 
-#[derive(Serialize, Deserialize, Clone, Copy, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Copy, PartialEq, Debug)]
 #[repr(C)]
 pub struct BallStagnationState {
     pub center: Vec2,
@@ -286,7 +286,7 @@ impl Mirror for BallStagnationState {
     }
 }
 
-#[derive(Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Debug)]
 #[repr(C)]
 pub struct BallState {
     pub pos: Vec2,
@@ -301,7 +301,7 @@ impl Mirror for BallState {
     }
 }
 
-#[derive(Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Debug)]
 #[repr(C)]
 pub struct GameState {
     pub tick: u32,
