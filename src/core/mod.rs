@@ -10,7 +10,6 @@ pub use config::*;
 pub use state::*;
 pub use util::*;
 pub use ipc::{
-    get_real_team,
     get_config,
     Strategy,
 };
