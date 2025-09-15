@@ -102,10 +102,6 @@ fn deref_sync<'a>(mmap: &'a [u8]) -> &'a AtomicU8 {
 static TEAM: OnceLock<u8> = OnceLock::new();
 static CONFIG: OnceLock<GameConfig> = OnceLock::new();
 
-pub fn get_real_team() -> u8 {
-    *TEAM.get().unwrap()
-}
-
 pub fn get_config() -> &'static GameConfig {
     CONFIG.get().unwrap()
 }
@@ -129,7 +125,7 @@ impl EngineChannel {
         })
     }
 
-    pub async fn handle_handshake(&self) -> anyhow::Result<()> {
+    pub async fn handle_handshake(&self) -> anyhow::Result<u8> {
         let sync = deref_sync(&self.mmap);
         poll(
             sync, 
@@ -148,13 +144,13 @@ impl EngineChannel {
             anyhow::bail!("did not recieve handshake message")
         };
 
-        TEAM.set(*team).unwrap();
+        let team = *team;
         CONFIG.set(config.clone()).unwrap();
 
         *msg = ProtocolUnion::HandshakeResponse(HANDSHAKE_BOT);
 
         sync.store(EngineStatus::Busy as u8, Ordering::Release);
-        Ok(())
+        Ok(team)
     }
 
     pub async fn handle_msg(&self, strategy: &Strategy) {

@@ -229,6 +229,14 @@ pub struct PlayerAction {
     pub pass: StateOption<Vec2>,
 }
 
+pub fn pass(dir: Vec2) -> StateOption<Vec2> {
+    StateOption::Some(dir)
+}
+
+pub fn no_pass() -> StateOption<Vec2> {
+    StateOption::None
+}
+
 impl Mirror for PlayerAction {
     fn mirror(&mut self, conf: &GameConfig) {
         self.dir.mirror(conf);
